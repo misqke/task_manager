@@ -1,0 +1,20 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  padding: 0 1rem;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.headerTitle {
+  color: #222;
+  flex: 1;
+}
+
+.headerButton {
+  width: 100px;
+  padding: 0.25rem;
+  cursor: pointer;
+}

@@ -1,0 +1,74 @@
+.userTaskContainer {
+  display: flex;
+  border: 1px solid black;
+  width: 100%;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.checkBoxBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.checkBox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  position: relative;
+}
+
+.checkMark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  display: none;
+  span {
+    display: flex;
+    min-height: 5px;
+    transform-origin: left;
+    position: absolute;
+    top: 60%;
+
+    border-radius: 10px;
+  }
+}
+
+.completed {
+  display: flex;
+}
+
+.checkLine1 {
+  width: 12px;
+  transform: rotateZ(225deg);
+  left: 52%;
+  background: green;
+}
+.checkLine2 {
+  width: 22px;
+  left: 48%;
+  transform: rotateZ(-60deg);
+  background: green;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
+  flex: 1;
+}
+
+.statusBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-self: flex-end;
+  width: 200px;
+}

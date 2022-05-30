@@ -38,6 +38,10 @@ export default async function handler(req, res) {
     }
     await Tasks.findByIdAndDelete(id);
     res.json({ message: "task deleted" });
+  } else if (req.method === "PATCH") {
+    const { _id: id } = req.body;
+    const updatedTask = await Tasks.findByIdAndUpdate(id, req.body);
+    res.json(updatedTask);
   } else {
     res.status(500).json({ error: "bad request method" });
   }

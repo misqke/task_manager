@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+import Header from "../components/Header";
+import UserWindow from "../components/user/UserWindow";
 import axios from "axios";
-import { getUserTasks, addTask, deleteTask } from "../controllers/tasks";
+import {
+  getUserTasks,
+  addTask,
+  deleteTask,
+  modifyTask,
+} from "../controllers/tasks";
 import { getSession } from "next-auth/react";
 
 const User = ({ user }) => {
@@ -31,6 +38,26 @@ const User = ({ user }) => {
     setTasks(newTaskList);
   };
 
+  const handleToggleCompletion = async (task) => {
+    let taskToSend;
+    if (task.status.completed === true) {
+      taskToSend = { ...task, status: { completed: false, completedAt: null } };
+    } else {
+      taskToSend = {
+        ...task,
+        status: { completed: true, completedAt: Date.now() },
+      };
+    }
+    const updatedTask = await modifyTask(taskToSend);
+    const index = tasks.findIndex((task) => task._id === updatedTask._id);
+    const newTaskList = [
+      ...tasks.slice(0, index),
+      updatedTask,
+      ...tasks.slice(index + 1),
+    ];
+    setTasks(newTaskList);
+  };
+
   useEffect(() => {
     const getTasks = async () => {
       const retrievedTasks = await getUserTasks();
@@ -41,44 +68,8 @@ const User = ({ user }) => {
 
   return (
     <div>
-      <h4>username: {user.name}</h4>
-      <h4>id: {user.id}</h4>
-      <form onSubmit={handleAddTask}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="title"
-        />
-        <input
-          type="text"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-          placeholder="desc"
-        />
-        <input
-          type="datetime-local"
-          name="data"
-          id="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
-        />
-        <button type="submit">add task</button>
-      </form>
-      <div>
-        {tasks.length > 0 &&
-          tasks.map((task, i) => (
-            <div
-              style={{ marginTop: "1rem" }}
-              key={i}
-              onClick={async () => handleDeleteTask(task._id)}
-            >
-              <h3>{task.title}</h3>
-              {task.desc.length > 0 && <p>{task.desc}</p>}
-              {task.deadline && <h5>deadline: {task.deadline}</h5>}
-            </div>
-          ))}
-      </div>
+      <Header user={user} />
+      <UserWindow user={user} tasks={tasks} toggle={handleToggleCompletion} />
     </div>
   );
 };
