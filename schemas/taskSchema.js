@@ -8,9 +8,22 @@ const TaskSchema = new mongoose.Schema(
     },
     desc: {
       type: String,
+      default: "",
     },
     deadline: {
       type: Date,
+      default: null,
+    },
+    creator: {
+      type: mongoose.ObjectId,
+      required: true,
+    },
+    group: {
+      id: mongoose.ObjectId,
+      assignedTo: {
+        type: mongoose.ObjectId,
+        default: null,
+      },
     },
     status: {
       completed: {
